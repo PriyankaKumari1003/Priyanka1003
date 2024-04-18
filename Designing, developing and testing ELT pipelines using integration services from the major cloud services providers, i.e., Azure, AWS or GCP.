@@ -1,0 +1,12 @@
+CREATE TABLE ELT_Pipelines (
+    PipelineID INT PRIMARY KEY,
+    PipelineName VARCHAR(100),
+    Provider VARCHAR(50),
+    Status VARCHAR(20),
+    LastExecuted DATETIME,
+    ExecutionDuration INT,
+    SourceTableName VARCHAR(100),
+    TargetTableName VARCHAR(100),
+    CONSTRAINT FK_SourceTable FOREIGN KEY (SourceTableName) REFERENCES SourceTables (TableName),
+    CONSTRAINT FK_TargetTable FOREIGN KEY (TargetTableName) REFERENCES TargetTables (TableName)
+);
