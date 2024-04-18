@@ -1,0 +1,54 @@
+1. Data Profiling Query:
+Use SQL queries to profile the raw data and understand its characteristics, such as data types, null values, unique values, and distributions.
+Example:-
+SELECT column_name, 
+       data_type, 
+       COUNT(*) AS total_records,
+       COUNT(DISTINCT column_name) AS unique_values,
+       SUM(CASE WHEN column_name IS NULL THEN 1 ELSE 0 END) AS null_values
+FROM table_name
+GROUP BY column_name, data_type;
+
+Data Cleaning Query:
+Write SQL queries to clean the data by addressing missing values, standardizing formats, and removing duplicates.
+Example:
+Replace NULL values with a default value
+UPDATE table_name SET column_name = 'default_value' WHERE column_name IS NULL;
+
+-- Standardize date format
+UPDATE table_name SET date_column = DATE_FORMAT(date_column, 'YYYY-MM-DD');
+
+-- Remove duplicates
+DELETE FROM table_name WHERE column_name IN (SELECT column_name FROM table_name GROUP BY column_name HAVING COUNT(*) > 1);
+
+Data Model Design:
+Based on the insights from data profiling, design an initial data model capturing entities, attributes, and relationships.
+Example:
+CREATE TABLE Entity (
+    entity_id INT PRIMARY KEY,
+    attribute1 VARCHAR(50),
+    attribute2 INT,
+    ...
+);
+
+CREATE TABLE RelatedEntity (
+    related_entity_id INT PRIMARY KEY,
+    entity_id INT,
+    attribute3 DATE,
+    ...
+    FOREIGN KEY (entity_id) REFERENCES Entity(entity_id)
+);
+
+Data Quality Monitoring Query:
+Develop SQL queries to monitor data quality by checking for anomalies, outliers, and adherence to validation rules.
+Example:
+Check for outliers in numerical data
+SELECT column_name, AVG(numeric_column), STDDEV(numeric_column)
+FROM table_name
+GROUP BY column_name
+HAVING ABS(numeric_column - AVG(numeric_column)) > 3 * STDDEV(numeric_column);
+
+Feedback and Documentation:
+Establish feedback mechanisms to capture data quality issues and improve processes iteratively.
+Document data models, cleaning procedures, and quality checks for future reference and collaboration.
+By employing these queries and design considerations, you can effectively infer data models and improve data quality in your raw data.
